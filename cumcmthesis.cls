@@ -155,7 +155,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \setmainfont{Times New Roman}
 %\setmonofont{Courier New}
 \setsansfont{Arial}
-\setCJKfamilyfont{kai}[AutoFakeBold]{simkai.ttf}
+\setCJKfamilyfont{kai}[AutoFakeBold=2]{KaiTi_GB2312}
 \newcommand*{\kai}{\CJKfamily{kai}}
 \setCJKfamilyfont{song}[AutoFakeBold]{SimSun}
 \newcommand*{\song}{\CJKfamily{song}}
@@ -243,6 +243,13 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % \else\relax\fi
 \pdfstringdefDisableCommands{%
 	\def\cftdotfill{ }%
+  \def\leavevmode@ifvmode{}%
+  \def\kern#1{}%
+  \def\uwave#1{#1}%
+  \def\bfseries{}%
+  \def\heiti{}%
+  \def\songti{}%
+  \def\kaishu{}%
 }
 \lstnewenvironment{tcode}
   {
@@ -620,7 +627,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newcommand*\mcm@commit@string@membername{参赛队员 (打印并签名) ：}
 \newcommand*\mcm@commit@string@supervisorname{指导教师或指导教师组负责人  (打印并签名)：}
 \newcommand\mcm@commit@string@inform{\quotation
-\noindent{（\bfseries\kai 请勿改动此页内容和格式。此承诺书打印签名后作为纸质论文的封面，注意电子版论文中不得出现此页。%
+\noindent{（\bfseries\kai 请勿改动此页内容和格式。此承诺书打印签名后作为纸质论文的封面，{\color{red}注意电子版论文中不得出现此页。}%
 以上内容请仔细核对，如填写错误，论文可能被取消评奖资格。）}
 \endquotation
 }
@@ -644,8 +651,8 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 \newcommand*\mcm@numberpage@string@countrynum{送全国评阅统一编号:\par \hspace*{2em}（赛区组委会填写）}
 \newcommand\mcm@numberpage@string@inform{\quotation
-\noindent（{\bfseries\kai 请勿改动此页内容和格式。此编号专用页仅供赛区和全国评阅使用，参赛队打印后装订到纸质论文的第二页上。
-注意电子版论文中不得出现此页。}）
+\noindent{\bfseries\kai（请勿改动此页内容和格式。此编号专用页仅供赛区和全国评阅使用，参赛队打印后装订到纸质论文的第二页上。
+注意电子版论文中不得出现此页。）}
 \endquotation
 }
 %设置目录格式
