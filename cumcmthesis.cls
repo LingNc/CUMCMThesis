@@ -156,8 +156,12 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 %\setmonofont{Courier New}
 \setsansfont{Arial}
 \setCJKfamilyfont{kai}[AutoFakeBold=2]{KaiTi_GB2312}
+% 仅对楷体回退
+\setCJKfallbackfamilyfont{kai}{KaiTi, simkai.ttf}
 \newcommand*{\kai}{\CJKfamily{kai}}
 \setCJKfamilyfont{song}[AutoFakeBold]{SimSun}
+% 仅对宋体回退
+\setCJKfallbackfamilyfont{song}{simsun.ttc}
 \newcommand*{\song}{\CJKfamily{song}}
 
 \renewcommand\normalsize{%
