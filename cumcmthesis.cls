@@ -67,7 +67,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \RequirePackage{cprotect}
 % 设置代码环境
 \RequirePackage{listings}
-\RequirePackage{xcolor}
+\RequirePackage{framed}
+% 代码颜色
+\RequirePackage[dvipsnames]{xcolor}
 % 插入链接
 \RequirePackage{url}
 % 绘图的包
@@ -89,29 +91,66 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 
 
 
-\definecolor{dkgreen}{rgb}{0,0.6,0}
-\definecolor{gray}{rgb}{0.5,0.5,0.5}
-\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{codegreen}{rgb}{0,0.6,0}      % 注释-绿色
+\definecolor{codebrown}{rgb}{0.58,0,0.12}  % 字符串-褐红色
+\definecolor{codeblue}{rgb}{0,0,0.8}       % 关键字-蓝色
+\definecolor{backcolour}{rgb}{0.98,0.98,0.98} % 背景-纯白
 
+
+% 全局代码样式设置
 \lstset{
-  frame=tb,
-  aboveskip=3mm,
-  belowskip=3mm,
-  showstringspaces=false,
-  columns=flexible,
-  framerule=1pt,
-  rulecolor=\color{gray!35},
-  backgroundcolor=\color{gray!5},
-  basicstyle={\small\ttfamily},
-  numbers=none,
-  numberstyle=\tiny\color{gray},
-  keywordstyle=\color{blue},
-  commentstyle=\color{dkgreen},
-  stringstyle=\color{mauve},
-  breaklines=true,
-  breakatwhitespace=true,
-  tabsize=3,
+  backgroundcolor=\color{white},
+  basicstyle=\small\ttfamily,          % 保持原模板字体
+  showstringspaces=false,             % 不显示字符串中的空格
+  keywordstyle=\color{codeblue},       % 蓝色关键字
+  commentstyle=\color{codegreen},      % 绿色注释
+  stringstyle=\color{codebrown},        % 褐红字符串
+  numbers=left,                        % 左侧行号
+  numberstyle=\tiny\color{black},       % 行号样式
+  breaklines=true,                    % 自动换行
+  stepnumber=1,                        % 每行标号
+  framesep=0.5em,                        % 框内边距
+  xleftmargin=2em,                     % 左缩进
+  framexleftmargin=0pt,                 % 行号对齐
+  frame=single,                     % 外框样式
+  rulesepcolor=\color{gray!30}         % 阴影颜色
 }
+
+% code 环境
+\lstnewenvironment{code}[1][]{%
+  \lstset{#1} % 允许临时覆盖参数
+}{%
+}
+% nosupport 命令
+\newcommand{\nosupport}{%
+  \section*{\mcm@cap@appendixname}
+  \textbf{\mcm@cap@supporting@statement}：本论文未使用任何程序代码。
+}
+\newcommand*{\mcm@cap@supporting@statement}{支撑材料声明}  % 多语言支持预留
+
+%% ====== 支撑材料表格环境 ======
+\RequirePackage{tabularx}
+
+\newenvironment{support}[1][]{
+  \noindent
+  \begin{tabularx}{\linewidth}{>{\ttfamily}l>{\raggedright\arraybackslash}Xl}
+    \toprule
+    \rowcolor{gray!10}
+    \textnormal{\textbf{文件路径}} & \textbf{用途说明} & \textbf{类型} \\
+    \midrule
+}{
+    \bottomrule
+  \end{tabularx}
+}
+% 支撑表格中间命令
+\newcommand{\addsupport}[3][]{
+  \def\@temppath{#3}
+  \IfFileExists{\@temppath}{}{
+    \ClassWarning{mcmthesis}{支撑文件 "#3" 不存在（请检查或删除该行）}
+  }
+  #3 & #2 & #1 \\
+}
+
 % 首行缩进
 \RequirePackage{setspace}
 % 设置浮动体的标题
@@ -631,7 +670,7 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newcommand*\mcm@commit@string@membername{参赛队员 (打印并签名) ：}
 \newcommand*\mcm@commit@string@supervisorname{指导教师或指导教师组负责人  (打印并签名)：}
 \newcommand\mcm@commit@string@inform{\quotation
-\noindent{（\bfseries\kai 请勿改动此页内容和格式。此承诺书打印签名后作为纸质论文的封面，{\color{red}注意电子版论文中不得出现此页。}%
+\noindent{（\bfseries\kai 请勿改动此页内容和格式。此承诺书打印签名后作为纸质论文的封面，注意电子版论文中不得出现此页。%
 以上内容请仔细核对，如填写错误，论文可能被取消评奖资格。）}
 \endquotation
 }

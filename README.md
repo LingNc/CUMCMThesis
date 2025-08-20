@@ -1,5 +1,5 @@
 
-## 全国大学生数学建模竞赛 LaTeX 论文模板  
+## 全国大学生数学建模竞赛 LaTeX 论文模板
 
 cumcmthesis 是为全国大学生数学建模竞赛编写的 `LaTeX` 模板, 旨在让大家专注于
 论文的内容写作, 而不用花费过多精力在格式的定制和调整上. 本手册是相应的参考, 其
@@ -7,7 +7,7 @@ cumcmthesis 是为全国大学生数学建模竞赛编写的 `LaTeX` 模板, 旨
 定的 `LaTeX` 的使用经验, 至少要会使用 `ctex` 宏包的一些功能, 比如调节字距或修改字体
 大小等等. 例子文件参看 [example.pdf](https://github.com/latexstudio/CUMCMThesis/blob/master/example.pdf).
 
-另外, 本模板制作了视频使用教程, 参看[这里](https://item.taobao.com/item.htm?spm=a1z10.1-c.w4004-3473795048.2.ZlPoPL&id=43823508044). 
+另外, 本模板制作了视频使用教程, 参看[这里](https://item.taobao.com/item.htm?spm=a1z10.1-c.w4004-3473795048.2.ZlPoPL&id=43823508044).
 
 <img src="https://github.com/latexstudio/CUMCMThesis/blob/master/figures/gongzhonghao2.png" alt="" width="350px">
 
@@ -30,6 +30,10 @@ cumcmthesis 是为全国大学生数学建模竞赛编写的 `LaTeX` 模板, 旨
 ![](https://github.com/latexstudio/CUMCMThesis/blob/master/example-4.png)
 
 ## 更新记录
+2025 年 8 月：
+1. 更新了，对宋体楷体字体的回退选项，兼容Linux和Win操作系统
+2. 发现中文字号使用 `\normalsize{12.05pt}` 并非标准的中文小四号 `\zihao{-4}` ，但是几乎一致
+3. 增加了新的附录环境，提供代码块环境和支撑材料环境（这个有问题未解决），并调整代码块的样式
 
 2023 年 9 月：
 1， 更新了前面承诺书版式。
