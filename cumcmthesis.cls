@@ -129,28 +129,25 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newcommand*{\mcm@cap@supporting@statement}{支撑材料声明}  % 多语言支持预留
 
 %% ====== 支撑材料表格环境 ======
-\RequirePackage{tabularx}
+\RequirePackage{longtable}
+\RequirePackage{array}
 
-\newenvironment{support}[1][]{
-  \noindent
-  \begin{tabularx}{\linewidth}{>{\ttfamily}l>{\raggedright\arraybackslash}Xl}
-    \toprule
-    \rowcolor{gray!10}
-    \textnormal{\textbf{文件路径}} & \textbf{用途说明} & \textbf{类型} \\
-    \midrule
-}{
-    \bottomrule
-  \end{tabularx}
+% 最稳定的 support 环境
+\newenvironment{support}{%
+  \par\noindent
+  \begin{center}
+    \begin{tabular}{l|ll}
+      \hline
+      \textbf{文件路径} & \textbf{用途说明} & \textbf{类型} \\
+      \hline
+}{%E
+    \end{tabular}
+  \end{center}
 }
-% 支撑表格中间命令
-\newcommand{\addsupport}[3][]{
-  \def\@temppath{#3}
-  \IfFileExists{\@temppath}{}{
-    \ClassWarning{mcmthesis}{支撑文件 "#3" 不存在（请检查或删除该行）}
-  }
-  #3 & #2 & #1 \\
+\newcommand{\addsupport}[3]{%
+  \texttt{\detokenize{#1}} & #2 & #3 \\
+  \hline
 }
-
 % 首行缩进
 \RequirePackage{setspace}
 % 设置浮动体的标题
@@ -172,6 +169,14 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
     \phantomsection
     \addcontentsline{toc}{section}{\refname}
     }
+% 修改附录编号
+\AtBeginEnvironment{appendices}{%
+  \renewcommand{\thesubsection}{\arabic{subsection}.}
+  \renewcommand{\subsection}{\@startsection{subsection}{2}{\z@}%
+    {-3.25ex\@plus -1ex \@minus -.2ex}%
+    {1.5ex \@plus .2ex}%
+    {\centering\bfseries\large}}
+}
 % 超链接 hyperref 的设置
 \RequirePackage{hyperref}
 % 智能自动化交叉引用
@@ -193,8 +198,10 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % 设置字体
 \setmainfont{Times New Roman}
 %\setmonofont{Courier New}
+% 指定标题使用黑体，其他的使用宋体
+\setCJKmainfont{SimSun}[BoldFont=SimHei, AutoFakeBold] % 正文宋体，粗体用黑体
 \setsansfont{Arial}
-\setCJKfamilyfont{kai}[AutoFakeBold=2]{KaiTi_GB2312}
+\setCJKfamilyfont{kai}[AutoFakeBold]{KaiTi_GB2312}
 % 仅对楷体回退
 \setCJKfallbackfamilyfont{kai}{KaiTi, simkai.ttf}
 \newcommand*{\kai}{\CJKfamily{kai}}
@@ -286,13 +293,6 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 % \else\relax\fi
 \pdfstringdefDisableCommands{%
 	\def\cftdotfill{ }%
-  \def\leavevmode@ifvmode{}%
-  \def\kern#1{}%
-  \def\uwave#1{#1}%
-  \def\bfseries{}%
-  \def\heiti{}%
-  \def\songti{}%
-  \def\kaishu{}%
 }
 \lstnewenvironment{tcode}
   {
@@ -647,8 +647,11 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newcommand*{\mcm@cap@abstractname}{摘要}
  %%%  中文关键字
 \newcommand*{\mcm@cap@keywordsname}{关键字}
-
- %%% 承诺书中的常量
+ %%%  附录
+\newcommand*{\mcm@cap@supporting@statement}{支撑材料声明}
+\newcommand*{\mcm@cap@programstatement}{程序声明}
+\newcommand*{\mcm@cap@aistatement}{AI工具声明}
+%%% 承诺书中的常量
 \newcommand*\mcm@commit@string@headname{赛区评阅编号（由赛区组委会填写）：}
 \newcommand*\mcm@commit@string@titlea{\the\year 高教社杯全国大学生数学建模竞赛}
 \newcommand*\mcm@commit@string@titleb{承\hspace{1em}诺\hspace{1em}书}
@@ -712,3 +715,23 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \newcommand{\upcite}[1]{$^{\mbox{\scriptsize \cite{#1}}}$}
 \newcommand{\supercite}[1]{\textsuperscript{\textsuperscript{\cite{#1}}}}
 \endinput
+
+% nosupport 命令
+\newcommand{\nosupport}{%
+  \section*{\mcm@cap@appendixname}
+  \textbf{\mcm@cap@supporting@statement}：本论文没有支撑材料
+}
+
+% nocode 命令
+\newcommand{\nocode}{%
+  \section*{\mcm@cap@appendixname}
+  \textbf{\mcm@cap@programstatement}：本论文没有用到程序
+}
+
+% 2025 new 添加 noai 命令
+\newcommand{\noai}{%
+  \vspace{1em}
+  \par\noindent
+  \textbf{\mcm@cap@aistatement}：本参赛队未使用任何 AI 工具
+  \par
+}
